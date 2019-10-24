@@ -28,6 +28,7 @@ int led_red = A5;
 int led_green = A4;
 bool go = true;
 bool turning = false;
+bool left = true;
 
 TaskHandle_t xHandle = NULL;
 
@@ -105,22 +106,24 @@ void turn(void *pvParameters) {
     pinMode(pin_right_backwards, OUTPUT);
     if(turning == true)
     {
-      int duration = random(1000, 5000);
-      int rightOrLeft = random(1,2);
-
       
+      if(left == true)
+      {
         digitalWrite(pin_right_forward, HIGH);
         digitalWrite(pin_left_forward, LOW);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
-      
-     /* else
+
+        left = false;
+      }
+      if(left == false)
       {
         digitalWrite(pin_right_forward, LOW);
         digitalWrite(pin_left_forward, HIGH);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
-      }*/
+        left = true;
+      }
     }
     vTaskDelay(5);
   }
