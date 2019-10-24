@@ -98,6 +98,7 @@ void drive(void *pvParameters) {
   }
 }
 void turn(void *pvParameters) {
+  int counter = 0;
   for (;;)
   {
     pinMode(pin_left_forward, OUTPUT);
@@ -113,8 +114,13 @@ void turn(void *pvParameters) {
         digitalWrite(pin_left_forward, LOW);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
-
+        counter++;
         left = false;
+        if (counter == 500){
+          go = true;
+          turning = false;
+          counter=0;
+      }
       }
       if(left == false)
       {
@@ -122,7 +128,13 @@ void turn(void *pvParameters) {
         digitalWrite(pin_left_forward, HIGH);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
+        counter++;
         left = true;
+        if (counter == 500){
+          go = true;
+          turning = false;
+          counter=0;
+      }
       }
     }
     vTaskDelay(5);
