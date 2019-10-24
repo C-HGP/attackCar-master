@@ -20,9 +20,9 @@ By Robin & CHP
 
 int pin_left_forward = D10;
 int pin_left_backwards = D11;
-int pin_right_forward = D3;
-int pin_right_backwards = D5;
-bool go = false;
+int pin_right_forward = D4;
+int pin_right_backwards = D6;
+bool go = true;
 
 TaskHandle_t xHandle = NULL;
 void drive(void *pvParameters);
@@ -64,10 +64,17 @@ void drive(void *pvParameters)
     pinMode(pin_left_backwards, OUTPUT); 
     pinMode(pin_right_forward, OUTPUT); 
     pinMode(pin_right_backwards, OUTPUT);
+    
     if(go)
     { 
       digitalWrite(pin_right_forward, HIGH);
       digitalWrite(pin_left_forward, HIGH);
+      digitalWrite(pin_right_backwards, LOW);
+      digitalWrite(pin_left_backwards, LOW);
+    }
+    else{
+      digitalWrite(pin_right_forward, LOW);
+      digitalWrite(pin_left_forward, LOW);
       digitalWrite(pin_right_backwards, LOW);
       digitalWrite(pin_left_backwards, LOW);
     }
