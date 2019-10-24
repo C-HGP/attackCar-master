@@ -1,3 +1,12 @@
+/*
+-Suicide Car- 
+The objective is to attack harmless walls at incredible speed.
+
+By Robin & CHP
+2019
+
+*/ 
+
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
 
@@ -9,9 +18,19 @@ int pin_right_backwards = D5;
 TaskHandle_t xHandle = NULL;
 void drive(void *pvParameters);
 
-enum grej {
+
+/**
+ * #TODO
+ * - ADD TASK FOR RANDOM GENERATION
+ * - ADD TASK FOR TURNING 
+ * - INTERRUPT DRIVING WHEN RANDOM NUMBER IS GIVEN 
+ * 
+ * 
+ * */
+
+enum Directions {
   Forward,
-  Backwardsssss,
+  Backwards,
   Still,
   Left,
   Right,
@@ -32,10 +51,12 @@ void setup() {
         drive,
         (const portCHAR *)"Go",   // Human readable name
         (configSTACK_DEPTH_TYPE)64,   // Stack size
-        (void *)1,                // A pvParameters to use by the task
+        (void *)1,                // A pvParameters to use by the taskk
         (UBaseType_t)1,               // Priority, 3 (configMAX_PRIORITIES - 1) highest, 0 lowest
         (TaskHandle_t *)NULL          // Task handle for external manipulation of task
     );
+  vTaskStartScheduler();
+  
 }
 void loop() {
   
@@ -43,9 +64,13 @@ void loop() {
 
 void drive(void *pvParameters)
 {
-  digitalWrite(pin_right_forward, HIGH);
-  digitalWrite(pin_left_forward, HIGH);
-  digitalWrite(pin_right_backwards, LOW);
-  digitalWrite(pin_left_backwards, LOW);
+  
+    for(;;) {
+    digitalWrite(pin_right_forward, LOW);
+    digitalWrite(pin_left_forward, LOW);
+    digitalWrite(pin_right_backwards, LOW);
+    digitalWrite(pin_left_backwards, LOW);  
+      vTaskDelay(100);
+    }
 }
 
