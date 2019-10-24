@@ -1,2 +1,4 @@
-# suicideCar-master
-Nucleo based car that will attack anything within x radius of the sensor
+# suicideCar-master STATE-MACHINE
+
+This branch is for testing the robot without use of FreeRTOS, aka not using
+tasks for driving the robot
