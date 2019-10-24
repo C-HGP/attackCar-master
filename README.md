@@ -1,2 +1,4 @@
-# suicideCar-master
-Nucleo based car that will attack anything within x radius of the sensor
+# suicideCar-master STATE-MACHINE BRANCH
+
+This branch will slowly morph into the master branch but it now exists
+because of tests without FreeRTOS
