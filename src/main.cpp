@@ -1,10 +1,8 @@
 /*
 -Suicide Car- 
 The objective is to attack harmless walls at incredible speed.
-
 By Robin & CHP
 2019
-
 */
 /**
  * #TODO
@@ -28,7 +26,8 @@ int led_red = A5;
 int led_green = A4;
 bool go = true;
 bool turning = false;
-bool left = true;
+
+bool left = true; 
 
 TaskHandle_t xHandle = NULL;
 
@@ -98,31 +97,46 @@ void drive(void *pvParameters) {
   }
 }
 void turn(void *pvParameters) {
+  int counter = 0;
   for (;;)
   {
     pinMode(pin_left_forward, OUTPUT);
     pinMode(pin_left_backwards, OUTPUT);
     pinMode(pin_right_forward, OUTPUT);
-    pinMode(pin_right_backwards, OUTPUT);
+    pinMode(pin_right_backwards, OUTPUT);  
+        
     if(turning == true)
     {
       
       if(left == true)
       {
-        digitalWrite(pin_right_forward, HIGH);
-        digitalWrite(pin_left_forward, LOW);
-        digitalWrite(pin_right_backwards, LOW);
-        digitalWrite(pin_left_backwards, LOW);
-
-        left = false;
-      }
-      if(left == false)
-      {
         digitalWrite(pin_right_forward, LOW);
         digitalWrite(pin_left_forward, HIGH);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
-        left = true;
+        counter++;
+        
+        if (counter == 500){
+          left = false;  
+          go = true;
+          turning = false;
+          counter=0;
+        }
+      }
+      else
+      {
+        digitalWrite(pin_right_forward, HIGH);
+        digitalWrite(pin_left_forward, LOW);
+        digitalWrite(pin_right_backwards, LOW);
+        digitalWrite(pin_left_backwards, LOW);
+        counter++;
+        
+        if (counter == 500){
+          left = true;
+          go = true;
+          turning = false;
+          counter=0;
+        }
       }
     }
     vTaskDelay(5);
@@ -133,13 +147,11 @@ void randomizer(void *pvParameters)
 {
   for (;;)
   {
-    pinMode(pin_left_forward, OUTPUT);
-    pinMode(pin_left_backwards, OUTPUT);
-    pinMode(pin_right_forward, OUTPUT);
-    pinMode(pin_right_backwards, OUTPUT);
     int randNr = random(1, 5);
+    //int dir = random(1,2);
     if (randNr == 3)
     {
+      //direction = D10;  
       go = false;
       turning = true;
     }
