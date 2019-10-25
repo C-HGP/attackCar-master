@@ -18,13 +18,16 @@ By Robin & CHP
 #include <STM32FreeRTOS.h>
 
 //Declare pins
-int pin_left_forward = D10;
-int pin_left_backwards = D11;
-int pin_right_forward = D4;
-int pin_right_backwards = D6;
-int duration;
+const int pin_left_forward = D10;
+const int pin_left_backwards = D11;
+const int pin_right_forward = D4;
+const int pin_right_backwards = D6;
+const int trigPin = D7;
+const int echoPin = D8;
+long duration, cm;
 bool go = true;
 bool turning = false;
+
 bool left = true; 
 
 TaskHandle_t xHandle = NULL;
@@ -33,8 +36,11 @@ TaskHandle_t xHandle = NULL;
 void drive(void *pvParameters);
 void randomizer(void *pvParameters);
 void turn(void *pvParameters);
+void sensor(void *pvParameters);
 
 void setup() {
+
+    Serial.begin(9600);
   xTaskCreate(
       drive,
       (const portCHAR *)"Go",     // Human readable name
@@ -56,6 +62,15 @@ void setup() {
   xTaskCreate(
       turn,
       (const portCHAR *)"Turn", // Human readable name
+      (configSTACK_DEPTH_TYPE)64, // Stack size
+      (void *)NULL,               // A pvParameters to use by the task
+      (UBaseType_t)1,             // Priority, 3 (configMAX_PRIORITIES - 1) highest, 0 lowest
+      (TaskHandle_t *)NULL        // Task handle for external manipulation of task
+  );
+
+   xTaskCreate(
+      sensor,
+      (const portCHAR *)"Sensor",     // Human readable name
       (configSTACK_DEPTH_TYPE)64, // Stack size
       (void *)NULL,               // A pvParameters to use by the task
       (UBaseType_t)1,             // Priority, 3 (configMAX_PRIORITIES - 1) highest, 0 lowest
@@ -98,39 +113,43 @@ void turn(void *pvParameters) {
   int counter = 0;
   for (;;)
   {
-    pinMode(pin_left_forward, OUTPUT);
-    pinMode(pin_left_backwards, OUTPUT);
-    pinMode(pin_right_forward, OUTPUT);
-    pinMode(pin_right_backwards, OUTPUT);  
-        
+    
     if(turning == true)
     {
       
       if(left == true)
       {
+        pinMode(pin_left_forward, OUTPUT);
+        pinMode(pin_left_backwards, OUTPUT);
+        pinMode(pin_right_forward, OUTPUT);
+        pinMode(pin_right_backwards, OUTPUT);  
         digitalWrite(pin_right_forward, LOW);
         digitalWrite(pin_left_forward, HIGH);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
         counter++;
         
-        if (counter == duration){
-          //left = false;  
+        if (counter == 500){
+          left = false;  
           go = true;
           turning = false;
           counter=0;
         }
       }
-      else
+      if(left == false)
       {
+        pinMode(pin_left_forward, OUTPUT);
+        pinMode(pin_left_backwards, OUTPUT);
+        pinMode(pin_right_forward, OUTPUT);
+        pinMode(pin_right_backwards, OUTPUT);
         digitalWrite(pin_right_forward, HIGH);
         digitalWrite(pin_left_forward, LOW);
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
         counter++;
         
-        if (counter == duration){
-          //left = true;
+        if (counter == 500){
+          left = true;
           go = true;
           turning = false;
           counter=0;
@@ -146,22 +165,39 @@ void randomizer(void *pvParameters)
   for (;;)
   {
     int randNr = random(1, 5);
-    
+    //int dir = random(1,2);
     if (randNr == 3)
     {
-      int dir = random(1,3);
-      if(dir == 1)
-      {
-        left = true;
-      }
-      else
-      {
-        left = false;
-      }
+      //direction = D10;  
       go = false;
       turning = true;
-      duration = random(100, 500);
     }
     vTaskDelay(1000);
   }
 }
+//Sensor
+void sensor(void *pvParameters) 
+{
+  pinMode(trigPin, OUTPUT_OPEN_DRAIN);
+  pinMode(echoPin, INPUT);
+   for (;;)
+   { 
+     digitalWrite(trigPin, LOW);
+     vTaskDelay(50);
+     digitalWrite(trigPin, HIGH);
+     vTaskDelay(70);
+     digitalWrite(trigPin, LOW);
+     pinMode(echoPin, INPUT);
+     duration = pulseIn(echoPin, HIGH);
+     cm = (duration/2) / 29.1;
+  
+     Serial.print(cm);
+     Serial.print("cm");
+     Serial.println();
+     vTaskDelay(25);
+    }
+  }
+
+
+
+
