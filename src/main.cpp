@@ -22,9 +22,9 @@ int pin_left_forward = D10;
 int pin_left_backwards = D11;
 int pin_right_forward = D4;
 int pin_right_backwards = D6;
+int duration;
 bool go = true;
 bool turning = false;
-
 bool left = true; 
 
 TaskHandle_t xHandle = NULL;
@@ -114,8 +114,8 @@ void turn(void *pvParameters) {
         digitalWrite(pin_left_backwards, LOW);
         counter++;
         
-        if (counter == 500){
-          left = false;  
+        if (counter == duration){
+          //left = false;  
           go = true;
           turning = false;
           counter=0;
@@ -129,8 +129,8 @@ void turn(void *pvParameters) {
         digitalWrite(pin_left_backwards, LOW);
         counter++;
         
-        if (counter == 500){
-          left = true;
+        if (counter == duration){
+          //left = true;
           go = true;
           turning = false;
           counter=0;
@@ -146,12 +146,21 @@ void randomizer(void *pvParameters)
   for (;;)
   {
     int randNr = random(1, 5);
-    //int dir = random(1,2);
+    
     if (randNr == 3)
     {
-      //direction = D10;  
+      int dir = random(1,3);
+      if(dir == 1)
+      {
+        left = true;
+      }
+      else
+      {
+        left = false;
+      }
       go = false;
       turning = true;
+      duration = random(100, 500);
     }
     vTaskDelay(1000);
   }
