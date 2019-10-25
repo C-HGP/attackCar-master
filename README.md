@@ -19,6 +19,7 @@ It turned out as a really fun robot where instead of avoiding objects, it finds 
 
 ***TODO***
 - [ ] Upload schematics
+- [ ] Add batteries (Will be done ASAP)
 
 # Schematics #
 **Coming soon**
