@@ -11,13 +11,14 @@ It turned out as a really fun robot where instead of avoiding objects, it finds 
 # Components # 
 * Nucleo FR103RB
 * RP5 Robot chassi
-* LC293D Motor Driver
+* L293D Motor Driver
+
 **These are just for fun**
 * 2 LEDs, one RED, one GREEN
 * Piezo
 
 ***TODO***
-- Upload schematics
+- [ ] Upload schematics
 
 # Schematics #
 **Coming soon**
