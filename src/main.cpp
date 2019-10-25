@@ -115,6 +115,7 @@ void turn(void *pvParameters) {
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
         counter++;
+<<<<<<< HEAD
         
         if (counter == 500){
           left = false;  
@@ -122,6 +123,14 @@ void turn(void *pvParameters) {
           turning = false;
           counter=0;
         }
+=======
+        left = false;
+        if (counter == 500){
+          go = true;
+          turning = false;
+          counter=0;
+      }
+>>>>>>> b7e55dada57a56144dea9c51596e7f8cb60d66e0
       }
       else
       {
@@ -130,6 +139,7 @@ void turn(void *pvParameters) {
         digitalWrite(pin_right_backwards, LOW);
         digitalWrite(pin_left_backwards, LOW);
         counter++;
+<<<<<<< HEAD
         
         if (counter == 500){
           left = true;
@@ -137,6 +147,14 @@ void turn(void *pvParameters) {
           turning = false;
           counter=0;
         }
+=======
+        left = true;
+        if (counter == 500){
+          go = true;
+          turning = false;
+          counter=0;
+      }
+>>>>>>> b7e55dada57a56144dea9c51596e7f8cb60d66e0
       }
     }
     vTaskDelay(5);
