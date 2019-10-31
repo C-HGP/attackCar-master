@@ -12,6 +12,7 @@ It turned out as a really fun robot where instead of avoiding objects, it finds 
 * Nucleo FR103RB
 * RP5 Robot chassi
 * L293D Motor Driver
+* L7805 
 
 **These are just for fun**
 * 2 LEDs, one RED, one GREEN
