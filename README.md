@@ -18,12 +18,12 @@ It turned out as a really fun robot where instead of avoiding objects, it finds 
 * Piezo
 
 ***TODO***
-- [ ] Upload schematics
-- [ ] Add batteries (Will be done ASAP)
+- [x] Upload schematics
+- [x] Add batteries (Will be done ASAP)
 - [ ] PWM for different speed
 
 # Schematics #
-**Coming soon**
+![alt text](https://github.com/C-HGP/suicideCar-master/blob/master/Pictures/RobotSketch_bb.jpg)
 
 # Pictures # 
 ![alt text](https://github.com/C-HGP/suicideCar-master/blob/master/Pictures/Robot%20(2).jpg)
