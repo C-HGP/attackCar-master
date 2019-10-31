@@ -220,7 +220,7 @@ void sensorAttack(void *pvParameters)
 
     // When sensor spots something in the bounds of 20(?),
     // go into attack mode then back to normal routine
-    if (cm < 20){
+    if (cm < 10){
       // Start attack mode, showing a red light
       digitalWrite(redLED, HIGH);
       digitalWrite(greenLED, LOW);
@@ -234,11 +234,11 @@ void sensorAttack(void *pvParameters)
 
       //Buzzer
       tone(buzzer, 500);
-      delay(1000);
+      delay(500);
       noTone(buzzer);
-      delay(1000);
+      delay(500);
       tone(buzzer, 500);
-      delay(1000);
+      delay(500);
       noTone(buzzer);
 
       //reverse
@@ -265,7 +265,7 @@ void sensorAttack(void *pvParameters)
       digitalWrite(pin_right_backwards, LOW);
       digitalWrite(pin_left_backwards, HIGH);
       digitalWrite(pin_right_forward, HIGH);
-      delay(1500);
+      delay(3000);
       //Forward
       digitalWrite(pin_left_backwards, LOW);
       digitalWrite(pin_left_forward, HIGH);
