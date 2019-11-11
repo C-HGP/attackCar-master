@@ -279,5 +279,3 @@ void sensorAttack(void *pvParameters)
     }
   }
 }
-
-// Test
